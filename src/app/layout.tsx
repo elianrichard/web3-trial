@@ -1,9 +1,11 @@
 import "@/styles/globals.css";
 
 import { type Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Figtree } from "next/font/google";
 
 import { TRPCReactProvider } from "@/trpc/react";
+import Nav from "./_components/Nav";
+import Providers from "./_components/Providers";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -11,7 +13,7 @@ export const metadata: Metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-const geist = Geist({
+const figtree = Figtree({
   subsets: ["latin"],
   variable: "--font-geist-sans",
 });
@@ -20,9 +22,14 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${geist.variable}`}>
+    <html lang="en" className={`${figtree.variable}`}>
       <body>
-        <TRPCReactProvider>{children}</TRPCReactProvider>
+        <TRPCReactProvider>
+          <Providers>
+            <Nav />
+            <main className="p-4">{children}</main>
+          </Providers>
+        </TRPCReactProvider>
       </body>
     </html>
   );
