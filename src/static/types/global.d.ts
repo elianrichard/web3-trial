@@ -1,7 +1,7 @@
-import type { ExternalProvider } from "@ethersproject/providers";
+import type { Eip1193Provider } from "ethers";
 
 declare global {
   interface Window {
-    ethereum: ExternalProvider;
+    ethereum: Eip1193Provider;
   }
 }

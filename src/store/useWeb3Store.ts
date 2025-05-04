@@ -7,21 +7,29 @@ export enum Web3StoreStatusEnum {
   ERROR = "ERROR",
 }
 
+export type TWeb3Account = {
+  address: string;
+  balance: string;
+};
+
 type TWeb3Store = {
-  accountAddress: string | null;
+  account: TWeb3Account | null;
   status: Web3StoreStatusEnum | null;
   setStatus: (status: Web3StoreStatusEnum) => void;
-  connectWallet: (address: string) => void;
+  connectWallet: (address: TWeb3Account) => void;
   disconnectWallet: () => void;
 };
 
 const useWeb3Store = create<TWeb3Store>()((set) => ({
-  accountAddress: "",
+  account: null,
   status: null,
   setStatus: (status) => set((prev) => ({ ...prev, status })),
-  connectWallet: (accountAddress) =>
-    set((prev) => ({ ...prev, accountAddress })),
-  disconnectWallet: () => set((prev) => ({ ...prev, accountAddress: null })),
+  connectWallet: (account) =>
+    set((prev) => ({
+      ...prev,
+      account,
+    })),
+  disconnectWallet: () => set((prev) => ({ ...prev, account: null })),
 }));
 
 export default useWeb3Store;

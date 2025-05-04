@@ -8,9 +8,11 @@ import Link from "next/link";
 
 const UserProfile = () => {
   const web3Status = useWeb3Store((state) => state.status);
-  const accountAddress = useWeb3Store((state) => state.accountAddress);
+  const web3Account = useWeb3Store((state) => state.account);
 
   const { connectWalletHandler, disconnectWalletHandler } = useConnectionWeb3();
+
+  console.log({ web3Account });
 
   switch (web3Status) {
     case Web3StoreStatusEnum.METAMASK_UNINSTALLED:
@@ -23,10 +25,13 @@ const UserProfile = () => {
     case Web3StoreStatusEnum.ERROR:
       return <Button onClick={connectWalletHandler}>Connect Wallet</Button>;
     case Web3StoreStatusEnum.CONNECTED:
-    case accountAddress:
+    case web3Account:
       return (
         <div className="flex items-center gap-4">
-          <p>{simplifyAddress(accountAddress)}</p>
+          <div className="flex flex-col gap-0">
+            <p>{simplifyAddress(web3Account?.address)}</p>
+            <p>Balance: {web3Account?.balance}</p>
+          </div>
           <Button onClick={disconnectWalletHandler} variant="destructive">
             Logout
           </Button>
